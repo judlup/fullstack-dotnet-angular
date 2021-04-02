@@ -4,19 +4,19 @@
 
 <table class="table table-striped">
   <thead>
-    <tr>
+    <tr class="text-center">
       <th>Department Id</th>
       <th>Department Name</th>
       <th>Options</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let dep of  DepartmentList">
+    <tr *ngFor="let dep of  DepartmentList" class="text-center">
       <td>{{dep.DepartmentId}}</td>
       <td>{{dep.DepartmentName}}</td>
-      <td>
-        <button type="button" class="btn btn-light mr-1" (click)="open('Edit',dep)">Edit</button>
-        <button type="button" class="btn btn-light mr-1" (click)="delete(dep.DepartmentId)">Delete</button>
+      <td class="d-flex flex-row justify-content-center">
+        <button type="button" class="btn btn-dark mr-1" (click)="open('Edit',dep)"><fa-icon [icon]="faEdit"></fa-icon></button>
+        <button type="button" class="btn btn-dark mr-1" (click)="delete(dep.DepartmentId)"><fa-icon [icon]="faTrash"></fa-icon></button>
       </td>
     </tr>
   </tbody>

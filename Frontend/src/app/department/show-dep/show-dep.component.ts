@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/shared.service';
 import { AddEditDepComponent } from '../add-edit-dep/add-edit-dep.component';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-show-dep',
@@ -14,6 +15,8 @@ export class ShowDepComponent implements OnInit {
 
   DepartmentList: any = [];
   dep: any;
+  faEdit = faEdit;
+  faTrash = faTrash;
 
   ngOnInit(): void {
     this.refreshDepList();
