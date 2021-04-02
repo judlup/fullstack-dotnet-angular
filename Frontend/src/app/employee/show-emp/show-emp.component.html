@@ -1,1 +1,29 @@
-<p>show-emp works!</p>
+<button type="button" class="btn btn-dark float-right m-2" (click)="open('Add')">
+  <fa-icon [icon]="faPlusSquare"></fa-icon>
+</button>
+
+<table class="table table-striped">
+  <thead>
+    <tr class="text-center">
+      <th>Id</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Date Of Joining</th>
+      <th>Photo</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let emp of  EmployeeList" class="text-center">
+      <td>{{emp.EmployeeId}}</td>
+      <td>{{emp.EmployeeName}}</td>
+      <td>{{emp.Department}}</td>
+      <td>{{emp.DateOfJoining | date : 'mediumDate'}}</td>
+      <th><img [src]="imgPrint(emp.PhotoFileName)" width="40px" class="rounded"></th>
+      <td class="d-flex flex-row justify-content-center">
+        <button type="button" class="btn btn-dark mr-1" (click)="open('Edit',emp)"><fa-icon [icon]="faEdit"></fa-icon></button>
+        <button type="button" class="btn btn-dark mr-1" (click)="delete(emp.EmployeeId)"><fa-icon [icon]="faTrash"></fa-icon></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

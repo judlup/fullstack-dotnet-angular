@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public JsonResult Post(Employee employee)
         {
-            string query = @"insert into dbo.Employee(EmployeeName,Department, DateOfJoining, PhotoFileName) values('" + employee.EmployeeName+ @"', '" + employee.Department + @"', '" + employee.DateOfJoining+ @"', '" + employee.PhotoFileName + @"')";
+            string query = @"insert into dbo.Employee(EmployeeName,Department, DateOfJoining, PhotoFileName) values('" + employee.EmployeeName+ @"', '" + employee.Department + @"', '" + employee.DateOfJoining+ @"', 'default.jpg')";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader myReader;
@@ -76,7 +76,7 @@ namespace WebAPI.Controllers
         [HttpPut]
         public JsonResult Put(Employee employee)
         {
-            string query = @"update dbo.Employee set EmployeeName = '" + employee.EmployeeName + @"', Department = '" + employee.Department+ @"', DateOfJoining = '" + employee.DateOfJoining+ @"', PhotoFileName = '" + employee.PhotoFileName+ @"' where EmployeeId = " + employee.EmployeeId + @" ";
+            string query = @"update dbo.Employee set EmployeeName = '" + employee.EmployeeName + @"', Department = '" + employee.Department+ @"', DateOfJoining = '" + employee.DateOfJoining+ @"' where EmployeeId = " + employee.EmployeeId + @" ";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader myReader;
@@ -119,9 +119,9 @@ namespace WebAPI.Controllers
             return new JsonResult("Delete Successfully");
         }
 
-        [Route("SaveFile")]
+        [Route("SaveFile/{id}")]
         [HttpPost]
-        public JsonResult SaveFile()
+        public JsonResult SaveFile(int id)
         {
             try
             {
@@ -135,11 +135,29 @@ namespace WebAPI.Controllers
                     postedFile.CopyTo(stream);
                 }
 
+                //Update record
+                string query = @"update dbo.Employee set PhotoFileName = '" + filename + @"' where EmployeeId = " + id + @" ";
+                DataTable table = new DataTable();
+                string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+                SqlDataReader myReader;
+
+                using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+                {
+                    myCon.Open();
+                    using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                    {
+                        myReader = myCommand.ExecuteReader();
+                        table.Load(myReader);
+
+                        myReader.Close();
+                        myCon.Close();
+                    }
+                }
                 return new JsonResult(filename);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return new JsonResult("default.jpg");
+                return new JsonResult(e);
             }
         }
 

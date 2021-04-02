@@ -1,1 +1,36 @@
-<p>add-edit-emp works!</p>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ModalTitle}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="frm" (ngSubmit)="send()">
+    <div class="form-group">
+      <div class="input-group">
+        <input id="name" class="form-control" formControlName="name" placeholder="Name" name="name">        
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">        
+        <select class="form-control" formControlName="department" name="department">          
+          <option *ngFor="let dep of departments" [value]="dep.DepartmentName">{{dep.DepartmentName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <input id="dateOfJoining" type="date" class="form-control" formControlName="dateOfJoining" placeholder="Date Of Joining" name="dateOfJoining">        
+      </div>
+    </div>
+    <div class="form-group" *ngIf="Mode === 'Edit'">
+      <div class="input-group">
+        <input id="photo" type="file" class="form-control" (change)="selectFile($event)">        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-dark btn-block" *ngIf="Mode === 'Add'">Add</button>
+      <button type="submit" class="btn btn-dark btn-block" *ngIf="Mode === 'Edit'">Edit</button>
+    </div>
+  </form>
+</div>

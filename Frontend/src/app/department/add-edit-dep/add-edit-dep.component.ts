@@ -35,14 +35,14 @@ export class AddEditDepComponent implements OnInit {
 
   addDepartment(): any {
     const val = {DepartmentName: this.frm.value.name};
-    this.service.addDepartment(val).subscribe(data => {
+    this.service.addDepartment(val).subscribe( (data: any) => {
       this.passEntry.emit('OK');
     });
   }
 
   updateDepartment(): any {
     const val = {DepartmentId: this.Data.DepartmentId, DepartmentName: this.frm.value.name};
-    this.service.updateDepartment(val).subscribe(data => {
+    this.service.updateDepartment(val).subscribe( (data: any) => {
       this.passEntry.emit('OK');
     });
   }
